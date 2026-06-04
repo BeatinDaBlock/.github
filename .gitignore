@@ -1,0 +1,20 @@
+# Scraped content (large, machine-generated)
+scraped/
+docs/extracted-content.json
+docs/wayback-snapshot-list.json
+
+# Node / Wrangler
+node_modules/
+.wrangler/
+dist/
+
+# WordPress local dev
+wordpress/local/
+
+# macOS
+.DS_Store
+
+# Secrets — never commit
+.env
+.env.*
+*.pem

@@ -1,0 +1,207 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   BeatinDaBlock — Main Stylesheet
+   Brand colors: update hex values once recovered from Wayback Machine scrape.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── CSS Variables ─────────────────────────────────────────────────────────── */
+:root {
+  --color-primary:    #e84c00;   /* Orange — update from brand */
+  --color-secondary:  #1a1a2e;   /* Deep navy */
+  --color-accent:     #f5a623;   /* Gold */
+  --color-bg:         #0d0d0d;   /* Near-black background */
+  --color-surface:    #1a1a1a;   /* Card surfaces */
+  --color-text:       #f0f0f0;   /* Primary text */
+  --color-muted:      #888888;   /* Secondary text */
+  --color-border:     #2a2a2a;   /* Borders */
+
+  --font-heading: "Oswald", "Impact", sans-serif;
+  --font-body:    "Inter", "Helvetica Neue", sans-serif;
+
+  --radius:  8px;
+  --shadow:  0 4px 24px rgba(0, 0, 0, 0.4);
+  --max-w:   1100px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* ── Navigation ────────────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+.nav__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.nav__logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.nav__links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+.nav__links a {
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+.nav__links a:hover { color: var(--color-primary); text-decoration: none; }
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-bg) 60%);
+  padding: 4rem 1.5rem;
+}
+.hero__inner { max-width: 700px; }
+.hero__logo { width: 160px; margin: 0 auto 1.5rem; }
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+.hero__sub {
+  font-size: 1.2rem;
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+}
+.hero__cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  border: 2px solid transparent;
+}
+.btn:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
+.btn--primary { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+.btn--ghost   { background: transparent; color: var(--color-text); border-color: var(--color-text); }
+
+/* ── Sections ──────────────────────────────────────────────────────────────── */
+.section { padding: 5rem 1.5rem; }
+.section:nth-child(even) { background: var(--color-surface); }
+.section__inner { max-width: var(--max-w); margin: 0 auto; }
+.section h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+  color: var(--color-accent);
+}
+
+/* ── Episode Card ──────────────────────────────────────────────────────────── */
+.episode-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.episode-card__title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+.episode-card__meta {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+.episode-card__desc { margin-bottom: 1.5rem; color: var(--color-muted); }
+
+/* ── Episodes Grid ─────────────────────────────────────────────────────────── */
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ── About Teaser ──────────────────────────────────────────────────────────── */
+.about-teaser__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-teaser__text h2 { margin-bottom: 1rem; }
+.about-teaser__text p  { color: var(--color-muted); margin-bottom: 2rem; }
+.about-teaser__image img { border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  background: var(--color-secondary);
+  border-top: 1px solid var(--color-border);
+  padding: 2.5rem 1.5rem;
+}
+.footer__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer__brand { color: var(--color-muted); font-size: 0.85rem; }
+.footer__links { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.footer__links a { color: var(--color-muted); font-size: 0.85rem; }
+.footer__links a:hover { color: var(--color-primary); }
+
+/* ── Loading state ─────────────────────────────────────────────────────────── */
+.loading { color: var(--color-muted); font-style: italic; }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav__links { display: none; } /* TODO: add hamburger menu */
+  .about-teaser__grid { grid-template-columns: 1fr; }
+  .about-teaser__image { order: -1; }
+}

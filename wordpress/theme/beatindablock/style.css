@@ -1,0 +1,13 @@
+/*
+Theme Name:  BeatinDaBlock
+Theme URI:   https://beatindablock.com
+Description: Custom WordPress theme for the BeatinDaBlock podcast. Built for speed, SEO, and podcast-first content.
+Author:      BeatinDaBlock
+Author URI:  https://beatindablock.com
+Version:     1.0.0
+License:     GNU General Public License v2 or later
+Text Domain: beatindablock
+Tags:        podcast, music, hip-hop, dark, custom-colors
+*/
+
+/* Theme styles are loaded via functions.php → wp_enqueue_scripts */

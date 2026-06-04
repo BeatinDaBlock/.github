@@ -1,0 +1,42 @@
+name = "beatindablock"
+main = "cloudflare/workers/redirect.js"
+compatibility_date = "2024-01-01"
+
+# ─── Pages project ────────────────────────────────────────────────────────────
+[site]
+bucket = "./cloudflare/pages/public"
+
+# ─── Environment variables ────────────────────────────────────────────────────
+[vars]
+SITE_URL      = "https://beatindablock.com"
+WORDPRESS_URL = "https://beatindablock.wordpress.com"
+RSS_FEED_URL  = "https://beatindablock.com/feed/podcast"
+
+# ─── D1 Database (episode metadata) ──────────────────────────────────────────
+[[d1_databases]]
+binding  = "DB"
+database_name = "beatindablock-episodes"
+database_id   = "REPLACE_WITH_D1_DATABASE_ID"
+
+# ─── R2 Bucket (audio/asset storage) ─────────────────────────────────────────
+[[r2_buckets]]
+binding     = "AUDIO_BUCKET"
+bucket_name = "beatindablock-audio"
+
+# ─── KV Namespace (RSS cache) ─────────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "RSS_CACHE"
+id      = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# ─── Cron Triggers (refresh RSS cache every hour) ────────────────────────────
+[triggers]
+crons = ["0 * * * *"]
+
+# ─── Environments ─────────────────────────────────────────────────────────────
+[env.production]
+name = "beatindablock-production"
+route = { pattern = "beatindablock.com/*", zone_name = "beatindablock.com" }
+
+[env.staging]
+name = "beatindablock-staging"
+route = { pattern = "staging.beatindablock.com/*", zone_name = "beatindablock.com" }

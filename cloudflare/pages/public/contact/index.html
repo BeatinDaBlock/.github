@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — BeatinDaBlock</title>
+  <meta name="description" content="Get in touch with BeatinDaBlock." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="icon" href="/assets/images/favicon.ico" />
+  <!-- Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="/">BeatinDaBlock</a>
+      <ul class="nav__links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/episodes/">Episodes</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/" aria-current="page">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section__inner" style="max-width:600px;">
+      <h2>Contact Us</h2>
+      <p style="color:var(--color-muted);margin-bottom:2rem;">
+        Want to submit a demo, pitch a feature, or just say what's good?
+        Fill out the form below.
+      </p>
+
+      <form id="contact-form" action="/api/contact" method="POST"
+            style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div>
+          <label for="name" style="display:block;margin-bottom:.4rem;font-size:.9rem;">Your Name</label>
+          <input id="name" name="name" type="text" required
+                 style="width:100%;padding:.75rem 1rem;background:var(--color-surface);
+                        border:1px solid var(--color-border);border-radius:var(--radius);
+                        color:var(--color-text);font-size:1rem;" />
+        </div>
+
+        <div>
+          <label for="email" style="display:block;margin-bottom:.4rem;font-size:.9rem;">Email</label>
+          <input id="email" name="email" type="email" required
+                 style="width:100%;padding:.75rem 1rem;background:var(--color-surface);
+                        border:1px solid var(--color-border);border-radius:var(--radius);
+                        color:var(--color-text);font-size:1rem;" />
+        </div>
+
+        <div>
+          <label for="message" style="display:block;margin-bottom:.4rem;font-size:.9rem;">Message</label>
+          <textarea id="message" name="message" rows="5" required
+                    style="width:100%;padding:.75rem 1rem;background:var(--color-surface);
+                           border:1px solid var(--color-border);border-radius:var(--radius);
+                           color:var(--color-text);font-size:1rem;resize:vertical;"></textarea>
+        </div>
+
+        <!-- Cloudflare Turnstile widget — replace sitekey with your own -->
+        <div class="cf-turnstile"
+             data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY"
+             data-theme="dark"></div>
+
+        <button class="btn btn--primary" type="submit">Send Message</button>
+      </form>
+
+      <p id="form-status" style="margin-top:1rem;color:var(--color-muted);"></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__brand">© 2012–2026 BeatinDaBlock. All rights reserved.</p>
+      <ul class="footer__links">
+        <li><a href="/feed/podcast">RSS Feed</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const status = document.getElementById("form-status");
+      status.textContent = "Sending…";
+      try {
+        const data = new FormData(e.target);
+        const res = await fetch("/api/contact", { method: "POST", body: data });
+        if (res.ok) {
+          status.textContent = "✅ Message sent! We'll get back to you soon.";
+          e.target.reset();
+        } else {
+          status.textContent = "❌ Something went wrong. Please try again.";
+        }
+      } catch {
+        status.textContent = "❌ Network error. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
