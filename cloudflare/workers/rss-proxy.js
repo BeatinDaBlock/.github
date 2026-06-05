@@ -23,6 +23,10 @@ export default {
       return serveLatestEpisode(env);
     }
 
+    if (url.pathname === "/api/contact") {
+      return handleContact(request);
+    }
+
     return new Response("Not found", { status: 404 });
   },
 };
@@ -79,9 +83,47 @@ async function fetchAndCacheFeed(env) {
   const res = await fetch(feedUrl, {
     headers: { "User-Agent": "BeatinDaBlock-Worker/1.0" },
   });
+  if (!res.ok) {
+    throw new Error(`RSS fetch failed with status ${res.status}`);
+  }
   const xml = await res.text();
   await env.RSS_CACHE.put("latest-feed", xml, { expirationTtl: 3600 });
   return xml;
+}
+
+async function handleContact(request) {
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  if (request.method !== "POST") {
+    return new Response("Method not allowed", {
+      status: 405,
+      headers: { ...corsHeaders, Allow: "POST, OPTIONS" },
+    });
+  }
+
+  const form = await request.formData();
+  const name = String(form.get("name") ?? "").trim();
+  const email = String(form.get("email") ?? "").trim();
+  const message = String(form.get("message") ?? "").trim();
+
+  if (!name || !email || !message) {
+    return new Response(JSON.stringify({ error: "Missing required fields." }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  return new Response(JSON.stringify({ ok: true }), {
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
 }
 
 // ─── Basic RSS → JSON parser ──────────────────────────────────────────────────
