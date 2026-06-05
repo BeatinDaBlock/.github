@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Episodes — BeatinDaBlock</title>
+  <meta name="description" content="Full episode archive for BeatinDaBlock podcast — underground hip-hop since 2012." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="icon" href="/assets/images/favicon.ico" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="/">BeatinDaBlock</a>
+      <ul class="nav__links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/episodes/" aria-current="page">Episodes</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="section__inner">
+      <h2>All Episodes</h2>
+      <p style="color:var(--color-muted);margin-bottom:2rem;">
+        The complete BeatinDaBlock archive — from our 2012 debut through today.
+      </p>
+      <div id="all-episodes" class="episodes-grid">
+        <p class="loading">Loading episodes…</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__brand">© 2012–2026 BeatinDaBlock. All rights reserved.</p>
+      <ul class="footer__links">
+        <li><a href="/feed/podcast">RSS Feed</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE = "/api";
+    async function loadAll() {
+      const container = document.getElementById("all-episodes");
+      try {
+        const res = await fetch(`${API_BASE}/episodes`);
+        const episodes = await res.json();
+        if (!episodes.length) { container.innerHTML = "<p>No episodes yet.</p>"; return; }
+
+        function esc(s) {
+          return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        }
+        function stripHtml(html) {
+          const d = document.createElement("div");
+          d.textContent = html;
+          const w = document.createElement("div");
+          w.innerHTML = d.textContent;
+          return w.textContent || "";
+        }
+
+        container.innerHTML = episodes.map(ep => {
+          const title = esc(ep.title || "Untitled");
+          const date  = ep.pubDate ? new Date(ep.pubDate).toLocaleDateString("en-US", {year:"numeric",month:"long",day:"numeric"}) : "";
+          const link  = esc(ep.link || "#");
+          const desc  = esc(stripHtml(ep.description || "").slice(0,180));
+          return `<article class="episode-card">
+            <h3 class="episode-card__title"><a href="${link}">${title}</a></h3>
+            <p class="episode-card__meta">${date}</p>
+            <p class="episode-card__desc">${desc}…</p>
+            <a class="btn btn--primary" href="${link}" style="margin-top:1rem">Listen →</a>
+          </article>`;
+        }).join("");
+      } catch(e) {
+        container.innerHTML = "<p class='loading'>Could not load episodes.</p>";
+      }
+    }
+    document.addEventListener("DOMContentLoaded", loadAll);
+  </script>
+</body>
+</html>

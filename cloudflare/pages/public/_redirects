@@ -1,0 +1,11 @@
+# Cloudflare Pages Redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# WordPress.com → apex domain
+https://beatindablock.wordpress.com/*   https://beatindablock.com/:splat   301
+
+# www → apex
+https://www.beatindablock.com/*         https://beatindablock.com/:splat   301
+
+# Legacy URL patterns (add more as recovered from Wayback Machine)
+# /episode-1     /episodes/episode-1/   301
