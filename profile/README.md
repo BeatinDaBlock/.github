@@ -36,14 +36,6 @@ BeatinDaBlock is a podcast dedicated to hip-hop culture, beats, and the block. B
 
 ---
 
-## 🗂️ Repositories
-
-| Repo | Description |
-|------|-------------|
-| [`.github-dev`](https://github.com/Cybersoulja/.github-dev) | Development hub — site strategy, Cloudflare config, WordPress theme, docs |
-
----
-
 ## 🕰️ History (2012–2016)
 
 BeatinDaBlock launched as a grassroots podcast covering the hip-hop underground. Key milestones:

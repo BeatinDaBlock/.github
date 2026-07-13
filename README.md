@@ -2,6 +2,8 @@
 
 > 🎙️ **[beatindablock.com](https://beatindablock.com)** | Underground hip-hop podcast since 2012
 
+📦 Repository: [`BeatinDaBlock/.github`](https://github.com/BeatinDaBlock/.github)
+
 This is the development hub for the BeatinDaBlock web presence. It contains:
 
 - **Cloudflare Pages** static site (`cloudflare/pages/`)
