@@ -18,7 +18,10 @@ Requirements (install once):
     #   Ubuntu: sudo apt install ffmpeg
 
 Usage:
-    python3 scripts/transcribe-episodes.py <audio_dir> [--model base] [--out transcribed/]
+    python3 scripts/transcribe-episodes.py <audio_dir> [--model base] [--out transcribed/] [--limit N]
+
+    Use --limit to sanity-check on a handful of episodes before committing
+    to a full run (e.g. --limit 3).
 
 Output:
     One .txt file per episode under the --out directory (default: transcribed/),
@@ -42,7 +45,7 @@ def find_audio_files(root: Path) -> list[Path]:
     return sorted(p for p in root.rglob("*") if p.suffix.lower() in AUDIO_EXTENSIONS)
 
 
-def transcribe_all(audio_dir: Path, out_dir: Path, model_name: str) -> None:
+def transcribe_all(audio_dir: Path, out_dir: Path, model_name: str, limit: int | None = None) -> None:
     try:
         import whisper
     except ImportError:
@@ -59,7 +62,12 @@ def transcribe_all(audio_dir: Path, out_dir: Path, model_name: str) -> None:
         print(f"No audio files found under {audio_dir}")
         return
 
-    print(f"Found {len(audio_files)} audio file(s). Loading Whisper model '{model_name}'...")
+    total_found = len(audio_files)
+    if limit is not None:
+        audio_files = audio_files[:limit]
+        print(f"Found {total_found} audio file(s); limiting this run to {len(audio_files)}.")
+
+    print(f"Loading Whisper model '{model_name}'...")
     model = whisper.load_model(model_name)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -100,13 +108,14 @@ def main():
     parser.add_argument("audio_dir", type=Path, help="Directory of audio files (e.g. your rclone R2 mount)")
     parser.add_argument("--model", default="base", help="Whisper model size: tiny, base, small, medium, large (default: base)")
     parser.add_argument("--out", type=Path, default=Path("transcribed"), help="Output directory for .txt transcripts (default: transcribed/)")
+    parser.add_argument("--limit", type=int, default=None, help="Only transcribe the first N audio files found (for testing)")
     args = parser.parse_args()
 
     if not args.audio_dir.is_dir():
         print(f"Not a directory: {args.audio_dir}", file=sys.stderr)
         sys.exit(1)
 
-    transcribe_all(args.audio_dir, args.out, args.model)
+    transcribe_all(args.audio_dir, args.out, args.model, args.limit)
 
 
 if __name__ == "__main__":
