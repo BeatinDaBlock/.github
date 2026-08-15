@@ -24,7 +24,12 @@ BeatinDaBlock is a podcast dedicated to hip-hop culture, beats, and the block. B
 ## 📻 Latest Episode
 
 <!-- EPISODE-START -->
-*Episode feed loading — check back soon or visit [beatindablock.com](https://beatindablock.com) for the latest.*
+### 🎧 [Page not found &#8211; Beatin&#039; Da Block]()
+**Released:** 
+
+...
+
+➡️ [Listen now →]()
 <!-- EPISODE-END -->
 
 > 🔄 *This section is auto-updated by a GitHub Action that pulls the latest episode from the podcast RSS feed.*
