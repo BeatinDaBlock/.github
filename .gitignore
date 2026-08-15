@@ -3,6 +3,9 @@ scraped/
 docs/extracted-content.json
 docs/wayback-snapshot-list.json
 
+# Raw episode transcripts (large, machine-generated; clean up before adding to transcripts/)
+transcribed/
+
 # Node / Wrangler
 node_modules/
 .wrangler/
